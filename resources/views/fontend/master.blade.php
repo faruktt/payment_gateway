@@ -12,35 +12,49 @@
     <!-- Navbar Section -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">WB Software</a>
+            <a class="navbar-brand" href="#">F1. Shop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <div class="botton-sub">
+               <ul class="navbar-nav ms-auto">
+    <li class="nav-item dropdown">
+        @if(Auth::guard('customer')->check())
+            <!-- If customer is logged in -->
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ Auth::guard('customer')->User()->name }}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item" href="">Profile</a>
+                </li>
+                <li>
+                    <form action="{{ route('customer.logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Log out</button>
+                    </form>
+                </li>
+            </ul>
+        @else
+            <!-- If not logged in -->
+            <a class="nav-link btn btn-outline-primary" href="{{ route('customer.login') }}">
+                Login
+            </a>
+        @endif
+    </li>
 
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <li class="nav-item">
+            @php
+            $cart = session('cart', []);
+            $cart_count = count($cart);
+        @endphp
 
-                            </button>
-                            <div class="dropdown-menu">
-                                <!-- Profile Link -->
-                                <a class="dropdown-item" href="">Profile</a>
+        <a href="">
+            🛒 Cart ({{ $cart_count }})
+        </a>
+    </li>
+</ul>
 
-                                <!-- Logout Form -->
-                                <a class="dropdown-item" href="">Log out</a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="" id="cart-icon">
-                            <i class="bi bi-cart"></i> Cart
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     </nav>

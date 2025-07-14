@@ -15,7 +15,7 @@
                         <h6 class="card-title mb-1">{{ $item->product_name }}</h6>
                         <p class="mb-1">Category: {{ $item->category->category_name ?? 'No Category' }}</p>
                         <p class="mb-2">Price: ৳{{ $item->product_price }}</p>
-                        <a href="#" class="btn btn-sm btn-primary w-100">Add to Cart</a>
+                        <a href="{{ route('cart.add', $item->id) }}" class="btn btn-sm btn-primary w-100">Add to Cart</a>
                     </div>
                 </div>
             </div>

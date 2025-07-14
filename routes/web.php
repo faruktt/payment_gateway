@@ -5,15 +5,18 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TranslatorController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CartController;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('', function () {
+    return view('fontend.fontend');
 });
 
-Route::get('/', function () {
-    return view('fontend.fontend');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', function () {
+//     return view('fontend.fontend');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,6 +32,19 @@ Route::middleware('auth')->group(function () {
   Route::resource('product', ProductController::class);
   route::get('/product/activate/{id}',[ProductController::class, 'active'])->name('product.active');
   route::get('/product/deactivate/{id}',[ProductController::class, 'deactive'])->name('product.deactive');
+
+  Route::post('/customer/fontend', [CustomerController::class, 'login'])->name('customer.fontend');
+  Route::post('/customer/store', [CustomerController::class, 'store'])->name('customer.store');
+Route::get('/customer/login', [CustomerController::class, 'log'])->name('customer.login');
+Route::get('/customer/reg', [CustomerController::class, 'reg'])->name('customer.reg');
+
+Route::get('/customer/fontend', [CustomerController::class, 'login'])->name('customer.log');
+Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+
+
+Route::middleware(['auth:customer'])->group(function () {
+Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+});
 
 
   Route::get('/translator', [TranslatorController::class, 'index'])->name('tr.d');
