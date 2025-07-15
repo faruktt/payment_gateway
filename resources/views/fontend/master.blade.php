@@ -43,16 +43,24 @@
         @endif
     </li>
 
-    <li class="nav-item">
-            @php
-            $cart = session('cart', []);
-            $cart_count = count($cart);
-        @endphp
+   <li class="nav-item">
+    @php
+        use Illuminate\Support\Facades\Auth;
+        use App\Models\Cart;
 
-        <a href="">
-            🛒 Cart ({{ $cart_count }})
-        </a>
-    </li>
+        if (Auth::guard('customer')->check()) {
+            $customer_id = Auth::guard('customer')->id();
+            $cart_count = Cart::where('customer_id', $customer_id)->where('status','0')->count();
+        } else {
+            $cart_count = 0;
+        }
+    @endphp
+
+    <a href="{{ route('cart.view') }}">
+        🛒 Cart ({{ $cart_count }})
+    </a>
+</li>
+
 </ul>
 
             </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TranslatorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
+use App\Http\Middleware\CustomerAuth;
 
 use Illuminate\Support\Facades\Route;
 
@@ -35,15 +36,19 @@ Route::middleware('auth')->group(function () {
 
   Route::post('/customer/fontend', [CustomerController::class, 'login'])->name('customer.fontend');
   Route::post('/customer/store', [CustomerController::class, 'store'])->name('customer.store');
-Route::get('/customer/login', [CustomerController::class, 'log'])->name('customer.login');
-Route::get('/customer/reg', [CustomerController::class, 'reg'])->name('customer.reg');
+    Route::get('/customer/login', [CustomerController::class, 'log'])->name('customer.login');
+    Route::get('/customer/reg', [CustomerController::class, 'reg'])->name('customer.reg');
 
-Route::get('/customer/fontend', [CustomerController::class, 'login'])->name('customer.log');
-Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+    Route::get('/customer/fontend', [CustomerController::class, 'login'])->name('customer.log');
+    Route::post('/customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+Route::get('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add.get');
+Route::get('/cart/view', [CartController::class, 'cartView'])->name('cart.view');
+Route::get('/cart/delete{id}', [CartController::class, 'cartdelete'])->name('cart.delete');
+Route::get('/cart/singlecart{id}', [CartController::class, 'singlecart'])->name('cart.single');
 
 
-Route::middleware(['auth:customer'])->group(function () {
-Route::post('/add-to-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::middleware('CustomerMiddlewire')->group(function () {
+
 });
 
 
