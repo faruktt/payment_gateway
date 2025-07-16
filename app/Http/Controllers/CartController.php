@@ -44,10 +44,11 @@ class CartController extends Controller
         return back();
     }
 
-    public function singlecart(){
-        $cart = Cart::with('product')->get();
+   public function singlecart($id)
+{
+    $cartItem = Cart::with('product')->get();
+    return view('cart.singleProduct', compact('cartItem'));
+}
 
-        return view('cart.singleProduct', compact('cart'));
-    }
 
 }

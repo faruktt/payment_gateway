@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TranslatorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Middleware\CustomerAuth;
 
 use Illuminate\Support\Facades\Route;
@@ -44,7 +45,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add.get');
 Route::get('/cart/view', [CartController::class, 'cartView'])->name('cart.view');
 Route::get('/cart/delete{id}', [CartController::class, 'cartdelete'])->name('cart.delete');
-Route::get('/cart/singlecart{id}', [CartController::class, 'singlecart'])->name('cart.single');
+Route::get('/cart/singlecart/{id}', [CartController::class, 'singlecart'])->name('cart.single');
+
+Route::get('/pay', [PaymentController::class, 'pay'])->name('pay.now');
+Route::post('/success', [PaymentController::class, 'success']);
+Route::post('/fail', [PaymentController::class, 'fail']);
+Route::post('/cancel', [PaymentController::class, 'cancel']);
+
 
 
 Route::middleware('CustomerMiddlewire')->group(function () {

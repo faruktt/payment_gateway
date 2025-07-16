@@ -4,7 +4,7 @@
 <div class="container my-4" style="width: 50%" >
     <h4>🛒 Your Cart</h4>
 
-    @foreach ($cart as $item)
+    @foreach ($cartItem as $item)
         <div class="card mb-3 shadow-sm">
             <div class="row g-0 align-items-center">
                 <!-- Image -->
@@ -41,7 +41,7 @@
 
     <!-- Pay Now Button -->
     <div class="text-end">
-        <a href="" class="btn btn-success px-4 py-2">💳 Pay Now</a>
+        <a href="{{ route('pay.now') }}" class="btn btn-success px-4 py-2">💳 Pay Now</a>
     </div>
 </div>
 
